@@ -109,36 +109,16 @@ void BoardComputer_Init(void)
 
   // Температура двигателя с иконкой (слева)
   label_engine_temp = lv_label_create(header_container);
-  lv_label_set_text(label_engine_temp, LV_SYMBOL_TINT " --C");  // Иконка капли для охлаждающей жидкости
+  lv_label_set_text(label_engine_temp, LV_SYMBOL_TINT " --C");
   lv_obj_set_style_text_color(label_engine_temp, lv_color_hex(0xFFA500), 0);
-  #if LV_FONT_MONTSERRAT_28
-    lv_obj_set_style_text_font(label_engine_temp, &lv_font_montserrat_28, 0);
-  #elif LV_FONT_MONTSERRAT_24
-    lv_obj_set_style_text_font(label_engine_temp, &lv_font_montserrat_24, 0);
-  #elif LV_FONT_MONTSERRAT_22
-    lv_obj_set_style_text_font(label_engine_temp, &lv_font_montserrat_22, 0);
-  #elif LV_FONT_MONTSERRAT_20
-    lv_obj_set_style_text_font(label_engine_temp, &lv_font_montserrat_20, 0);
-  #else
-    lv_obj_set_style_text_font(label_engine_temp, &lv_font_montserrat_18, 0);
-  #endif
+  lv_obj_set_style_text_font(label_engine_temp, &lv_font_montserrat_28, 0);
   lv_label_set_long_mode(label_engine_temp, LV_LABEL_LONG_CLIP);
 
   // Заряд аккумулятора с иконкой (справа)
   label_battery = lv_label_create(header_container);
-  lv_label_set_text(label_battery, LV_SYMBOL_BATTERY_FULL " --V");  // Иконка батареи
+  lv_label_set_text(label_battery, LV_SYMBOL_BATTERY_FULL " --V");
   lv_obj_set_style_text_color(label_battery, lv_color_hex(0xFFA500), 0);
-  #if LV_FONT_MONTSERRAT_28
-    lv_obj_set_style_text_font(label_battery, &lv_font_montserrat_28, 0);
-  #elif LV_FONT_MONTSERRAT_24
-    lv_obj_set_style_text_font(label_battery, &lv_font_montserrat_24, 0);
-  #elif LV_FONT_MONTSERRAT_22
-    lv_obj_set_style_text_font(label_battery, &lv_font_montserrat_22, 0);
-  #elif LV_FONT_MONTSERRAT_20
-    lv_obj_set_style_text_font(label_battery, &lv_font_montserrat_20, 0);
-  #else
-    lv_obj_set_style_text_font(label_battery, &lv_font_montserrat_18, 0);
-  #endif
+  lv_obj_set_style_text_font(label_battery, &lv_font_montserrat_28, 0);
   lv_label_set_long_mode(label_battery, LV_LABEL_LONG_CLIP);
 
   // Создаем горизонтальный разделитель
@@ -160,21 +140,7 @@ void BoardComputer_Init(void)
   label_bottom = lv_label_create(bottom_container);
   lv_label_set_text(label_bottom, "--:--");
   lv_obj_set_style_text_color(label_bottom, lv_color_hex(0xFFA500), 0);
-  #if LV_FONT_MONTSERRAT_36
-    lv_obj_set_style_text_font(label_bottom, &lv_font_montserrat_36, 0);
-  #elif LV_FONT_MONTSERRAT_32
-    lv_obj_set_style_text_font(label_bottom, &lv_font_montserrat_32, 0);
-  #elif LV_FONT_MONTSERRAT_28
-    lv_obj_set_style_text_font(label_bottom, &lv_font_montserrat_28, 0);
-  #elif LV_FONT_MONTSERRAT_24
-    lv_obj_set_style_text_font(label_bottom, &lv_font_montserrat_24, 0);
-  #elif LV_FONT_MONTSERRAT_22
-    lv_obj_set_style_text_font(label_bottom, &lv_font_montserrat_22, 0);
-  #elif LV_FONT_MONTSERRAT_20
-    lv_obj_set_style_text_font(label_bottom, &lv_font_montserrat_20, 0);
-  #else
-    lv_obj_set_style_text_font(label_bottom, &lv_font_montserrat_18, 0);
-  #endif
+  lv_obj_set_style_text_font(label_bottom, &lv_font_montserrat_36, 0);
   lv_obj_align(label_bottom, LV_ALIGN_CENTER, 0, 0);
 
   // Создаем таймер для обновления дисплея каждые 500 мс

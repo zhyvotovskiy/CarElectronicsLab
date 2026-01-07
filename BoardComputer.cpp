@@ -21,10 +21,43 @@ int current_minute = 30;
 // Режим отображения нижней строки: 0 - часы, 1 - обороты, 2 - скорость, 3 - расход, 4 - остаток хода
 int display_mode = 0;
 
+// Кнопка BOOT для переключения режимов
+#define BOOT_BUTTON_PIN 9  // GPIO9 - кнопка BOOT на ESP32-C6
+bool last_button_state = HIGH;
+unsigned long last_button_press = 0;
+const unsigned long BUTTON_DEBOUNCE = 100; // 100 мс защита от дребезга
+
 // Функция обновления дисплея
 void IRAM_ATTR update_display(lv_timer_t * timer)
 {
   char buf[100];
+  unsigned long current_time = millis();
+
+  // Проверка кнопки BOOT для ручного переключения режима
+  bool button_state = digitalRead(BOOT_BUTTON_PIN);
+  if (button_state == LOW && last_button_state == HIGH) {
+    // Кнопка нажата (с защитой от дребезга)
+    if (current_time - last_button_press > BUTTON_DEBOUNCE) {
+      display_mode++;
+      if (display_mode > 4) {
+        display_mode = 0;
+      }
+      last_button_press = current_time;
+    }
+  }
+  last_button_state = button_state;
+
+  // Имитация изменения данных (для демонстрации)
+  engine_temp = 95 + (millis() / 10000) % 20; // 95-115°C
+  battery_voltage = 13.5 + (millis() / 5000) % 15 * 0.1; // 13.5-14.9V
+  engine_rpm = 1500 + (millis() / 100) % 3000; // 1500-4500 RPM
+  speed_kmh = 60 + (millis() / 200) % 80; // 60-140 km/h
+  fuel_consumption = 5.0 + (millis() / 1000) % 50 * 0.1; // 5.0-10.0 L/100
+  remaining_km = 300 + (millis() / 500) % 400; // 300-700 km
+
+  // Обновление времени (имитация)
+  current_minute = (millis() / 60000) % 60;
+  current_hour = 12 + (millis() / 3600000) % 12;
 
   // Обновляем температуру двигателя с иконкой
   snprintf(buf, sizeof(buf), LV_SYMBOL_TINT " %.0fC", engine_temp);
@@ -41,16 +74,16 @@ void IRAM_ATTR update_display(lv_timer_t * timer)
       snprintf(buf, sizeof(buf), "%02d:%02d", current_hour, current_minute);
       break;
     case 1: // Обороты двигателя
-      snprintf(buf, sizeof(buf), "%d RPM", engine_rpm);
+      snprintf(buf, sizeof(buf), LV_SYMBOL_REFRESH " %d RPM", engine_rpm);
       break;
     case 2: // Скорость
-      snprintf(buf, sizeof(buf), "%.0f km/h", speed_kmh);
+      snprintf(buf, sizeof(buf), LV_SYMBOL_GPS " %.0f km/h", speed_kmh);
       break;
     case 3: // Расход топлива
-      snprintf(buf, sizeof(buf), "%.1f L/100", fuel_consumption);
+      snprintf(buf, sizeof(buf), LV_SYMBOL_CHARGE " %.1f l/100", fuel_consumption);
       break;
     case 4: // Остаток хода
-      snprintf(buf, sizeof(buf), "%d km", remaining_km);
+      snprintf(buf, sizeof(buf), LV_SYMBOL_DRIVE " %d km", remaining_km);
       break;
   }
   lv_label_set_text(label_bottom, buf);
@@ -58,6 +91,9 @@ void IRAM_ATTR update_display(lv_timer_t * timer)
 
 void BoardComputer_Init(void)
 {
+  // Инициализация кнопки BOOT
+  pinMode(BOOT_BUTTON_PIN, INPUT_PULLUP);
+
   // Устанавливаем черный фон для всего экрана
   lv_obj_set_style_bg_color(lv_scr_act(), lv_color_hex(0x000000), 0);
 
@@ -122,20 +158,10 @@ void BoardComputer_Init(void)
 
   // Нижняя строка - часы / данные CAN
   label_bottom = lv_label_create(bottom_container);
-  lv_label_set_text(label_bottom, "TIME: --:--");
+  lv_label_set_text(label_bottom, "--:--");
   lv_obj_set_style_text_color(label_bottom, lv_color_hex(0xFFA500), 0);
-  #if LV_FONT_MONTSERRAT_48
-    lv_obj_set_style_text_font(label_bottom, &lv_font_montserrat_48, 0);
-  #elif LV_FONT_MONTSERRAT_42
-    lv_obj_set_style_text_font(label_bottom, &lv_font_montserrat_42, 0);
-  #elif LV_FONT_MONTSERRAT_40
-    lv_obj_set_style_text_font(label_bottom, &lv_font_montserrat_40, 0);
-  #elif LV_FONT_MONTSERRAT_38
-    lv_obj_set_style_text_font(label_bottom, &lv_font_montserrat_38, 0);
-  #elif LV_FONT_MONTSERRAT_36
+  #if LV_FONT_MONTSERRAT_36
     lv_obj_set_style_text_font(label_bottom, &lv_font_montserrat_36, 0);
-  #elif LV_FONT_MONTSERRAT_34
-    lv_obj_set_style_text_font(label_bottom, &lv_font_montserrat_34, 0);
   #elif LV_FONT_MONTSERRAT_32
     lv_obj_set_style_text_font(label_bottom, &lv_font_montserrat_32, 0);
   #elif LV_FONT_MONTSERRAT_28

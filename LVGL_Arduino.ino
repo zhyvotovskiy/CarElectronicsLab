@@ -1,6 +1,7 @@
 #include "Display_ST7789.h"
 #include "LVGL_Driver.h"
 #include "BoardComputer.h"
+#include "CANHandler.h"
 
 void setup()
 {
@@ -8,11 +9,13 @@ void setup()
   LCD_Init();
   Lvgl_Init();
 
+  CANHandler_Init();
   BoardComputer_Init();
 }
 
 void loop()
 {
+  CANHandler_Process();  // Обновление данных автомобиля
   Timer_Loop();
   delay(5);
 }

@@ -1,22 +1,11 @@
 #include "BoardComputer.h"
+#include "VehicleData.h"
 
 // Глобальные переменные для экранных элементов
 static lv_obj_t * label_engine_temp;
 static lv_obj_t * label_battery;
 static lv_obj_t * label_bottom;
 static lv_timer_t * update_timer;
-
-// Переменные для хранения данных (заполните их данными из CAN шины)
-float engine_temp = 105.0;
-float battery_voltage = 14.2;
-int engine_rpm = 2500;
-float speed_kmh = 80.0;
-float fuel_consumption = 7.5;
-int remaining_km = 450;
-
-// Текущее время для часов (заполните данными из RTC)
-int current_hour = 12;
-int current_minute = 30;
 
 // Режим отображения нижней строки: 0 - часы, 1 - обороты, 2 - скорость, 3 - расход, 4 - остаток хода
 int display_mode = 0;
@@ -47,43 +36,31 @@ void IRAM_ATTR update_display(lv_timer_t * timer)
   }
   last_button_state = button_state;
 
-  // Имитация изменения данных (для демонстрации)
-  engine_temp = 95 + (millis() / 10000) % 20; // 95-115°C
-  battery_voltage = 13.5 + (millis() / 5000) % 15 * 0.1; // 13.5-14.9V
-  engine_rpm = 1500 + (millis() / 100) % 3000; // 1500-4500 RPM
-  speed_kmh = 60 + (millis() / 200) % 80; // 60-140 km/h
-  fuel_consumption = 5.0 + (millis() / 1000) % 50 * 0.1; // 5.0-10.0 L/100
-  remaining_km = 300 + (millis() / 500) % 400; // 300-700 km
-
-  // Обновление времени (имитация)
-  current_minute = (millis() / 60000) % 60;
-  current_hour = 12 + (millis() / 3600000) % 12;
-
   // Обновляем температуру двигателя с иконкой
-  snprintf(buf, sizeof(buf), LV_SYMBOL_TINT " %.0fC", engine_temp);
+  snprintf(buf, sizeof(buf), LV_SYMBOL_TINT " %.0fC", g_vehicleData.engine_temp);
   lv_label_set_text(label_engine_temp, buf);
 
   // Обновляем напряжение аккумулятора с иконкой
-  snprintf(buf, sizeof(buf), LV_SYMBOL_BATTERY_FULL " %.1fV", battery_voltage);
+  snprintf(buf, sizeof(buf), LV_SYMBOL_BATTERY_FULL " %.1fV", g_vehicleData.battery_voltage);
   lv_label_set_text(label_battery, buf);
 
   // Обновляем нижнюю строку в зависимости от режима
   switch(display_mode)
   {
     case 0: // Часы
-      snprintf(buf, sizeof(buf), "%02d:%02d", current_hour, current_minute);
+      snprintf(buf, sizeof(buf), "%02d:%02d", g_vehicleData.current_hour, g_vehicleData.current_minute);
       break;
     case 1: // Обороты двигателя
-      snprintf(buf, sizeof(buf), LV_SYMBOL_REFRESH " %d RPM", engine_rpm);
+      snprintf(buf, sizeof(buf), LV_SYMBOL_REFRESH " %d RPM", g_vehicleData.engine_rpm);
       break;
     case 2: // Скорость
-      snprintf(buf, sizeof(buf), LV_SYMBOL_GPS " %.0f km/h", speed_kmh);
+      snprintf(buf, sizeof(buf), LV_SYMBOL_GPS " %.0f km/h", g_vehicleData.speed_kmh);
       break;
     case 3: // Расход топлива
-      snprintf(buf, sizeof(buf), LV_SYMBOL_CHARGE " %.1f l/100", fuel_consumption);
+      snprintf(buf, sizeof(buf), LV_SYMBOL_CHARGE " %.1f l/100", g_vehicleData.fuel_consumption);
       break;
     case 4: // Остаток хода
-      snprintf(buf, sizeof(buf), LV_SYMBOL_DRIVE " %d km", remaining_km);
+      snprintf(buf, sizeof(buf), LV_SYMBOL_DRIVE " %d km", g_vehicleData.remaining_km);
       break;
   }
   lv_label_set_text(label_bottom, buf);
@@ -152,41 +129,4 @@ void change_display_mode(int mode)
 {
   display_mode = mode;
   update_display(NULL);
-}
-
-// Функции для обновления данных (вызывайте из CAN обработчика)
-void update_engine_temp(float temp)
-{
-  engine_temp = temp;
-}
-
-void update_battery_voltage(float voltage)
-{
-  battery_voltage = voltage;
-}
-
-void update_engine_rpm(int rpm)
-{
-  engine_rpm = rpm;
-}
-
-void update_speed(float speed)
-{
-  speed_kmh = speed;
-}
-
-void update_fuel_consumption(float consumption)
-{
-  fuel_consumption = consumption;
-}
-
-void update_remaining_km(int km)
-{
-  remaining_km = km;
-}
-
-void update_time(int hour, int minute)
-{
-  current_hour = hour;
-  current_minute = minute;
 }

@@ -2,6 +2,16 @@
 
 #include "LVGL_Driver.h"
 
+// Режимы отображения нижней строки
+enum DisplayMode : uint8_t {
+    MODE_CLOCK = 0,
+    MODE_RPM,
+    MODE_SPEED,
+    MODE_FUEL_CONSUMPTION,
+    MODE_REMAINING_KM,
+    MODE_COUNT  // Количество режимов
+};
+
 // Основная функция инициализации дисплея бортового компьютера
 void BoardComputerScreen_Init(void);
 
@@ -9,5 +19,4 @@ void BoardComputerScreen_Init(void);
 void BoardComputerScreen_Stop(void);
 
 // Функции для управления режимом отображения
-// mode: 0 - часы, 1 - обороты, 2 - скорость, 3 - расход, 4 - остаток хода
-void BoardComputerScreen_ChangeMode(int mode);
+void BoardComputerScreen_ChangeMode(DisplayMode mode);

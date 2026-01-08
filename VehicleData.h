@@ -1,5 +1,7 @@
 #pragma once
 
+#include <cstdio>
+
 // Структура для хранения всех данных автомобиля
 struct VehicleData {
     // Данные двигателя
@@ -31,6 +33,15 @@ struct VehicleData {
         current_hour(0),
         current_minute(0)
     {}
+
+    // Методы форматирования данных для отображения
+    void formatEngineTemp(char* buffer, size_t size, const char* icon = nullptr) const;
+    void formatBatteryVoltage(char* buffer, size_t size, const char* icon = nullptr) const;
+    void formatClock(char* buffer, size_t size) const;
+    void formatRPM(char* buffer, size_t size, const char* icon = nullptr) const;
+    void formatSpeed(char* buffer, size_t size, const char* icon = nullptr) const;
+    void formatFuelConsumption(char* buffer, size_t size, const char* icon = nullptr) const;
+    void formatRemainingKm(char* buffer, size_t size, const char* icon = nullptr) const;
 };
 
 // Глобальный экземпляр данных автомобиля

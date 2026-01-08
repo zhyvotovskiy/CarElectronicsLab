@@ -1,4 +1,4 @@
-#include "BoardComputer.h"
+#include "BoardComputerScreen.h"
 #include "VehicleData.h"
 
 // Глобальные переменные для экранных элементов
@@ -66,7 +66,15 @@ void IRAM_ATTR update_display(lv_timer_t * timer)
   lv_label_set_text(label_bottom, buf);
 }
 
-void BoardComputer_Init(void)
+void BoardComputerScreen_Stop(void)
+{
+    if (update_timer != NULL) {
+        lv_timer_del(update_timer);
+        update_timer = NULL;
+    }
+}
+
+void BoardComputerScreen_Init(void)
 {
   // Инициализация кнопки BOOT
   pinMode(BOOT_BUTTON_PIN, INPUT_PULLUP);
@@ -124,8 +132,8 @@ void BoardComputer_Init(void)
   update_timer = lv_timer_create(update_display, 500, NULL);
 }
 
-// Функция для изменения режима отображения (вызывайте при нажатии кнопок)
-void change_display_mode(int mode)
+// Функция для изменения режима отображения
+void BoardComputerScreen_ChangeMode(int mode)
 {
   display_mode = mode;
   update_display(NULL);

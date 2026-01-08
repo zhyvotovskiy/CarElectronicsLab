@@ -3,9 +3,11 @@
 #include "LVGL_Driver.h"
 
 // Основная функция инициализации дисплея бортового компьютера
-// Настраивает GPIO9 (кнопка BOOT) для переключения режимов отображения
-void BoardComputer_Init(void);
+void BoardComputerScreen_Init(void);
+
+// Остановка таймера обновления (для переключения экранов)
+void BoardComputerScreen_Stop(void);
 
 // Функции для управления режимом отображения
 // mode: 0 - часы, 1 - обороты, 2 - скорость, 3 - расход, 4 - остаток хода
-void change_display_mode(int mode);
+void BoardComputerScreen_ChangeMode(int mode);

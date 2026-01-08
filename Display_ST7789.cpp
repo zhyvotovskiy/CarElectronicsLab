@@ -201,40 +201,21 @@ parameter :
     Yend  :   End uint16_t coordinates
     color :   Set the color
 ******************************************************************************/
-void LCD_addWindow(uint16_t Xstart, uint16_t Ystart, uint16_t Xend, uint16_t Yend,uint16_t* color)
-{          
-  // uint16_t i,j;
-  // LCD_SetCursor(Xstart, Ystart, Xend,Yend);
-  // uint16_t Show_Width = Xend - Xstart + 1;
-  // uint16_t Show_Height = Yend - Ystart + 1;
-  // for(i = 0; i < Show_Height; i++){               
-  //   for(j = 0; j < Show_Width; j++){
-  //     LCD_WriteData_Word(color[(i*(Show_Width))+j]);                           
-  //   }
-  // }           
+void LCD_addWindow(uint16_t Xstart, uint16_t Ystart, uint16_t Xend, uint16_t Yend, uint16_t* color)
+{
   uint16_t Show_Width = Xend - Xstart + 1;
   uint16_t Show_Height = Yend - Ystart + 1;
   uint32_t numBytes = Show_Width * Show_Height * sizeof(uint16_t);
   uint8_t Read_D[numBytes];
   LCD_SetCursor(Xstart, Ystart, Xend, Yend);
-  LCD_WriteData_nbyte((uint8_t*)color, Read_D, numBytes);        
+  LCD_WriteData_nbyte((uint8_t*)color, Read_D, numBytes);
 }
-// backlight
+
+// Backlight initialization
 void Backlight_Init(void)
 {
-  ledcAttach(EXAMPLE_PIN_NUM_BK_LIGHT, Frequency, Resolution);   
-  ledcWrite(EXAMPLE_PIN_NUM_BK_LIGHT, 100);                        
-}
-
-void Set_Backlight(uint8_t Light)                        //
-{
-
-  if(Light > 100 || Light < 0)
-    printf("Set Backlight parameters in the range of 0 to 100 \r\n");
-  else{
-    uint32_t Backlight = Light*10;
-    ledcWrite(EXAMPLE_PIN_NUM_BK_LIGHT, Backlight);
-  }
+  ledcAttach(EXAMPLE_PIN_NUM_BK_LIGHT, Frequency, Resolution);
+  ledcWrite(EXAMPLE_PIN_NUM_BK_LIGHT, 100);
 }
 
 

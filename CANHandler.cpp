@@ -72,9 +72,8 @@ void CANHandler_ParseMessage(uint32_t id, uint8_t* data, uint8_t len)
         case CAN_ID_FUEL:
             // TODO: Распарсить данные о топливе
             // Пример:
-            // g_vehicleData.fuel_level = data[0];
-            // g_vehicleData.fuel_consumption = ((data[1] << 8) | data[2]) * 0.1;
-            // g_vehicleData.remaining_km = (data[3] << 8) | data[4];
+            // g_vehicleData.fuel_consumption = ((data[0] << 8) | data[1]) * 0.1;
+            // g_vehicleData.remaining_km = (data[2] << 8) | data[3];
             break;
 
         default:

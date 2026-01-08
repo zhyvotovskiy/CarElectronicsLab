@@ -15,7 +15,6 @@ struct VehicleData {
     // Топливо
     float fuel_consumption;     // Расход топлива (л/100км)
     int remaining_km;           // Остаток хода (км)
-    float fuel_level;           // Уровень топлива (%)
 
     // Время
     int current_hour;
@@ -29,7 +28,6 @@ struct VehicleData {
         speed_kmh(0),
         fuel_consumption(0),
         remaining_km(0),
-        fuel_level(0),
         current_hour(0),
         current_minute(0)
     {}

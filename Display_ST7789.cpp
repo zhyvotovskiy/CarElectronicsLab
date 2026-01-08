@@ -1,7 +1,11 @@
 #include "Display_ST7789.h"
-   
+
+// Forward declarations
+static void Backlight_Init(void);
+
 #define SPI_WRITE(_dat)         SPI.transfer(_dat)
 #define SPI_WRITE_Word(_dat)    SPI.transfer16(_dat)
+
 void SPI_Init()
 {
   SPI.begin(EXAMPLE_PIN_NUM_SCLK,EXAMPLE_PIN_NUM_MISO,EXAMPLE_PIN_NUM_MOSI); 
@@ -212,7 +216,7 @@ void LCD_addWindow(uint16_t Xstart, uint16_t Ystart, uint16_t Xend, uint16_t Yen
 }
 
 // Backlight initialization
-void Backlight_Init(void)
+static void Backlight_Init(void)
 {
   ledcAttach(EXAMPLE_PIN_NUM_BK_LIGHT, Frequency, Resolution);
   ledcWrite(EXAMPLE_PIN_NUM_BK_LIGHT, 100);

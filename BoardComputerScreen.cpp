@@ -7,8 +7,8 @@
 // ============================================================================
 namespace {
     // Цвета
-    constexpr uint32_t COLOR_BLACK = 0x000000;
-    constexpr uint32_t COLOR_ORANGE = 0xFFA500;
+    constexpr uint32_t COLOR_BLACK = 0x71310B;
+    constexpr uint32_t COLOR_ORANGE = 0xFCFA10;
 
     // Размеры и позиции
     constexpr int16_t HEADER_HEIGHT = 45;

@@ -35,13 +35,13 @@ struct VehicleData {
     {}
 
     // Методы форматирования данных для отображения
-    void formatEngineTemp(char* buffer, size_t size, const char* icon = nullptr) const;
-    void formatBatteryVoltage(char* buffer, size_t size, const char* icon = nullptr) const;
+    void formatEngineTemp(char* buffer, size_t size) const;
+    void formatBatteryVoltage(char* buffer, size_t size) const;
     void formatClock(char* buffer, size_t size) const;
-    void formatRPM(char* buffer, size_t size, const char* icon = nullptr) const;
-    void formatSpeed(char* buffer, size_t size, const char* icon = nullptr) const;
-    void formatFuelConsumption(char* buffer, size_t size, const char* icon = nullptr) const;
-    void formatRemainingKm(char* buffer, size_t size, const char* icon = nullptr) const;
+    void formatRPM(char* value_buffer, size_t value_size, char* unit_buffer, size_t unit_size) const;
+    void formatSpeed(char* value_buffer, size_t value_size, char* unit_buffer, size_t unit_size) const;
+    void formatFuelConsumption(char* value_buffer, size_t value_size, char* unit_buffer, size_t unit_size) const;
+    void formatRemainingKm(char* value_buffer, size_t value_size, char* unit_buffer, size_t unit_size) const;
 };
 
 // Глобальный экземпляр данных автомобиля

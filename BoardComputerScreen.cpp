@@ -11,11 +11,11 @@ namespace {
     constexpr uint32_t COLOR_ORANGE = 0xFCFA10;
 
     // Размеры и позиции
-    constexpr int16_t HEADER_HEIGHT = 45;
+    constexpr int16_t HEADER_HEIGHT = 60;
     constexpr int16_t SEPARATOR_HEIGHT = 2;
     constexpr int16_t SEPARATOR_MARGIN = 20;
-    constexpr int16_t SEPARATOR_Y_POS = 47;
-    constexpr int16_t BOTTOM_CONTAINER_HEIGHT = LCD_HEIGHT - 55;
+    constexpr int16_t SEPARATOR_Y_POS = 62;
+    constexpr int16_t BOTTOM_CONTAINER_HEIGHT = LCD_HEIGHT - 70;
 
     // Таймеры
     constexpr uint32_t UPDATE_INTERVAL_MS = 500;
@@ -32,7 +32,8 @@ namespace {
     struct UIElements {
         lv_obj_t* label_engine_temp = nullptr;
         lv_obj_t* label_battery = nullptr;
-        lv_obj_t* label_bottom = nullptr;
+        lv_obj_t* label_bottom_value = nullptr;
+        lv_obj_t* label_bottom_unit = nullptr;
         lv_timer_t* update_timer = nullptr;
     };
 
@@ -51,28 +52,32 @@ namespace {
 }
 
 // ============================================================================
-// Вспомогательные функции для форматирования с иконками LVGL
+// Вспомогательные функции для форматирования
 // ============================================================================
 namespace {
-    void formatBottomDisplay(char* buffer, size_t size, DisplayMode mode, const VehicleData& data) {
+    void formatBottomDisplay(char* value_buffer, size_t value_size,
+                            char* unit_buffer, size_t unit_size,
+                            DisplayMode mode, const VehicleData& data) {
         switch(mode) {
             case MODE_CLOCK:
-                data.formatClock(buffer, size);
+                data.formatClock(value_buffer, value_size);
+                unit_buffer[0] = '\0';  // Нет единиц измерения для часов
                 break;
             case MODE_RPM:
-                data.formatRPM(buffer, size, LV_SYMBOL_REFRESH);
+                data.formatRPM(value_buffer, value_size, unit_buffer, unit_size);
                 break;
             case MODE_SPEED:
-                data.formatSpeed(buffer, size, LV_SYMBOL_GPS);
+                data.formatSpeed(value_buffer, value_size, unit_buffer, unit_size);
                 break;
             case MODE_FUEL_CONSUMPTION:
-                data.formatFuelConsumption(buffer, size, LV_SYMBOL_CHARGE);
+                data.formatFuelConsumption(value_buffer, value_size, unit_buffer, unit_size);
                 break;
             case MODE_REMAINING_KM:
-                data.formatRemainingKm(buffer, size, LV_SYMBOL_DRIVE);
+                data.formatRemainingKm(value_buffer, value_size, unit_buffer, unit_size);
                 break;
             default:
-                snprintf(buffer, size, "---");
+                snprintf(value_buffer, value_size, "---");
+                unit_buffer[0] = '\0';
                 break;
         }
     }
@@ -85,17 +90,21 @@ namespace {
     void updateHeaderLabels(const VehicleData& data) {
         char buffer[TEXT_BUFFER_SIZE];
 
-        data.formatEngineTemp(buffer, sizeof(buffer), LV_SYMBOL_TINT);
+        data.formatEngineTemp(buffer, sizeof(buffer));
         lv_label_set_text(ui.label_engine_temp, buffer);
 
-        data.formatBatteryVoltage(buffer, sizeof(buffer), LV_SYMBOL_BATTERY_FULL);
+        data.formatBatteryVoltage(buffer, sizeof(buffer));
         lv_label_set_text(ui.label_battery, buffer);
     }
 
     void updateBottomLabel(const VehicleData& data) {
-        char buffer[TEXT_BUFFER_SIZE];
-        formatBottomDisplay(buffer, sizeof(buffer), current_mode, data);
-        lv_label_set_text(ui.label_bottom, buffer);
+        char value_buffer[TEXT_BUFFER_SIZE];
+        char unit_buffer[TEXT_BUFFER_SIZE];
+        formatBottomDisplay(value_buffer, sizeof(value_buffer),
+                          unit_buffer, sizeof(unit_buffer),
+                          current_mode, data);
+        lv_label_set_text(ui.label_bottom_value, value_buffer);
+        lv_label_set_text(ui.label_bottom_unit, unit_buffer);
     }
 
     void handleButtonInput() {
@@ -133,7 +142,7 @@ namespace {
     lv_obj_t* createHeaderLabel(lv_obj_t* parent, const char* initial_text) {
         lv_obj_t* label = lv_label_create(parent);
         lv_label_set_text(label, initial_text);
-        applyCommonLabelStyle(label, COLOR_ORANGE, &lv_font_montserrat_36);
+        applyCommonLabelStyle(label, COLOR_ORANGE, &lv_font_montserrat_48);
         return label;
     }
 
@@ -149,10 +158,8 @@ namespace {
     }
 
     void createHeaderLabels(lv_obj_t* header_container) {
-        ui.label_engine_temp = createHeaderLabel(header_container,
-                                                  LV_SYMBOL_TINT " --C");
-        ui.label_battery = createHeaderLabel(header_container,
-                                              LV_SYMBOL_BATTERY_FULL " --V");
+        ui.label_engine_temp = createHeaderLabel(header_container, "--c");
+        ui.label_battery = createHeaderLabel(header_container, "--v");
     }
 
     void createSeparator() {
@@ -170,11 +177,19 @@ namespace {
         lv_obj_set_style_bg_color(container, lv_color_hex(COLOR_BLACK), 0);
         lv_obj_set_style_border_width(container, 0, 0);
         lv_obj_set_style_pad_all(container, 5, 0);
+        lv_obj_set_flex_flow(container, LV_FLEX_FLOW_COLUMN);
+        lv_obj_set_flex_align(container, LV_FLEX_ALIGN_CENTER,
+                              LV_FLEX_ALIGN_CENTER, LV_FLEX_ALIGN_CENTER);
 
-        ui.label_bottom = lv_label_create(container);
-        lv_label_set_text(ui.label_bottom, "--:--");
-        applyCommonLabelStyle(ui.label_bottom, COLOR_ORANGE, &lv_font_montserrat_36);
-        lv_obj_align(ui.label_bottom, LV_ALIGN_CENTER, 0, 0);
+        // Создаём label для значения (большой шрифт)
+        ui.label_bottom_value = lv_label_create(container);
+        lv_label_set_text(ui.label_bottom_value, "--:--");
+        applyCommonLabelStyle(ui.label_bottom_value, COLOR_ORANGE, &lv_font_montserrat_48);
+
+        // Создаём label для единиц измерения (маленький шрифт)
+        ui.label_bottom_unit = lv_label_create(container);
+        lv_label_set_text(ui.label_bottom_unit, "");
+        applyCommonLabelStyle(ui.label_bottom_unit, COLOR_ORANGE, &lv_font_montserrat_24);
     }
 
     void createUIElements() {

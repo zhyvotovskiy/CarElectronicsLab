@@ -133,7 +133,7 @@ namespace {
     lv_obj_t* createHeaderLabel(lv_obj_t* parent, const char* initial_text) {
         lv_obj_t* label = lv_label_create(parent);
         lv_label_set_text(label, initial_text);
-        applyCommonLabelStyle(label, COLOR_ORANGE, &lv_font_montserrat_28);
+        applyCommonLabelStyle(label, COLOR_ORANGE, &lv_font_montserrat_36);
         return label;
     }
 

@@ -1,0 +1,136 @@
+ID DLC data Period Comment
+# Источник: example/MS-module и example/LS-module
+# Формат: ID(HEX) DLC data-bytes Period Comment
+# Period: ms для периодических, "event" для событийных/однократных
+
+# ===== MS CAN (95 kbps) =====
+0x100 0 - event Wake up bus
+0x697 8 47 00 60 00 02 00 00 80 event Wake up screen
+0x201 3 01 FF 00 event SETTINGS press
+0x201 3 00 FF 00 event SETTINGS release
+0x208 0 - event Climate dummy frame
+0x208 6 08 16 01 event Climate knob right 1 click
+0x208 6 01 17 00 event Climate knob press
+0x208 6 00 17 00 event Climate knob release
+0x208 6 08 16 FF event Climate knob left 1 click (repeated x4)
+0x248 8 06 AA 01 01 07 10 11 00 1000 ECC data request
+0x691 8 41 00 60 11 02 00 20 08 event Clear display
+0x6C1 8 21 3A C0 00 37 03 10 1A event AUX mode enable
+
+# ===== LS CAN (33 kbps) =====
+0x100 0 - event Wake up bus
+0x170 3 55 55 55 500 Wake up ISP
+0x280 5 70 05 <wait> <count> <length> event Beep (wait/count/length in 10ms units)
+0x5E8 8 81 <d0> <d1> <d2> 00 00 00 00 event ECN digits
+0x5E8 8 81 <clim_dir> <clim_temp> <clim_fan> 00 00 00 00 event ECN climate payload
+0x5E8 8 81 11 11 11 00 00 00 00 event ECN demo
+0x5E8 8 81 22 22 22 00 00 00 00 event ECN demo
+0x5E8 8 81 33 33 33 00 00 00 00 event ECN demo
+0x5E8 8 81 00 00 00 00 00 00 00 event ECN demo
+0x5E8 8 81 33 88 EE 00 00 00 00 event ECN "stops" label
+
+# Приборка: стрелки/индикаторы (IPC 0x255)
+0x255 8 05 AE 06 01 8A 00 00 00 event PanelCheck speed max
+0x255 8 05 AE 07 01 7F 00 00 00 event PanelCheck тахо max
+0x255 8 04 AE 08 01 FF 00 00 00 event PanelCheck fuel max
+0x255 8 05 AE 06 01 00 00 00 00 event PanelCheck speed reset
+0x255 8 05 AE 07 01 00 00 00 00 event PanelCheck тахо reset
+0x255 8 04 AE 08 01 00 00 00 00 event PanelCheck fuel reset
+0x255 8 05 AE 06 01 <speed/2> 00 00 00 event Speedometer
+0x255 8 05 AE 07 01 <map(0..80->00..7F)> 00 00 00 event Tachometer
+
+0x255 8 04 AE 02 08 08 00 00 00 event Seatbelt indicator ON
+0x255 8 04 AE 02 08 00 00 00 00 event Seatbelt indicator OFF
+0x255 8 04 AE 0E 20 20 00 00 00 event Sport indicator ON
+0x255 8 04 AE 0E 20 00 00 00 00 event Sport indicator OFF
+0x255 8 04 AE 04 02 02 00 00 00 event ESP indicator ON
+0x255 8 04 AE 04 02 00 00 00 00 event ESP indicator OFF
+0x255 8 04 AE 02 01 01 00 00 00 event Rear fog indicator ON
+0x255 8 04 AE 02 01 00 00 00 00 event Rear fog indicator OFF
+0x255 8 04 AE 01 04 04 00 00 00 event High beam indicator ON
+0x255 8 04 AE 01 04 00 00 00 00 event High beam indicator OFF
+
+# Задние огни/стопы (0x251/0x250)
+0x251 8 06 AE 01 C0 C0 00 00 00 event Rear turn lights ON
+0x251 8 06 AE 01 00 00 00 00 00 event Rear turn lights OFF
+0x251 8 06 AE 01 00 00 04 04 00 event Top stop ON
+0x251 8 06 AE 01 00 00 00 00 00 event Top stop OFF
+0x251 8 04 AE 03 04 04 00 00 00 event Open rear door
+0x250 8 06 AE 02 03 02 00 00 00 event Strobe left high beam ON
+0x250 8 06 AE 02 03 01 00 00 00 event Strobe right high beam ON
+0x250 8 06 AE 02 03 00 00 00 00 event Strobe beams OFF
+
+# Дистанционные команды (0x160) — зависят от keyNum/keyCode*
+0x160 4 <keyNum> 80 <keyCode0> <keyCode1> event Hold close
+0x160 4 <keyNum> C0 <keyCode0> <keyCode1> event Hold close
+0x160 4 <keyNum> 30 <keyCode0> <keyCode1> event Hold open
+0x160 4 <keyNum> 00 <keyCode0> <keyCode1> event Release key
+
+# IPC central buttons/light state (0x305) — отправка периодически при режимах
+0x305 7 <d0> <d1> <d2> <d3> <d4|3A> <d5|81> <d6> 500ms Sport ON
+0x305 7 <d0> <d1> <d2> <d3|08> <d4|3B> <d5|81> <d6> 500ms ESP OFF
+
+# ===== RX frames (известные, не отправляются) =====
+0x108 ? - event Speed + RPM (LS)
+0x145 ? - event Engine temp (LS), temp = Data[3] - 40
+0x160 ? - event Remote open/close (LS)
+0x175 ? - event Steering wheel buttons (LS)
+0x230 ? - event Doors/locks (LS)
+0x350 ? - event Backwards bit (LS)
+0x370 ? - event Handbrake/fog/etc (LS)
+0x500 ? - event Voltage (LS)
+0x180 ? - event Date/time (MS)
+0x201 ? - event Media buttons (MS)
+0x206 ? - event Wheel buttons (MS)
+0x450 ? - event Ignition state (MS)
+0x4E8 ? - event Speed/RPM (MS)
+0x4EE ? - event Range (MS)
+0x548 ? - event ECC (MS)
+0x683 ? - event Outside temperature (MS)
+0x6C1 ? - event Media RDS (MS)
+0x6C8 ? - event Climate info (MS)
+0x2B0 ? - event Window status (MS)
+
+# ===== DB observations (Car-CAN-Message-DB) =====
+# MS-CAN
+0x180 8 46 01 10 0B F1 6F 37 FF ? Time
+0x188 6 46 0A F3 62 F6 D4 ? Distance
+0x682 3 46 01 75 ? Sensor temp (value/2-40)
+0x683 3 46 01 76 ? Display temp (value/2-40)
+0x68C 3 46 01 6B ? Fuel level (94 - value/2)
+0x4E8 7 46 0F 0C 50 19 0A 02 ? Motion (speed/rpm)
+0x4EC 5 46 07 3C 29 00 ? Engine temp (value-40)
+0x4ED 4 46 02 41 43 ? Fuel injection
+0x4EE 4 46 03 05 06 ? Range (value*0.5 km)
+0x684 6 46 0F 39 38 36 38 ? TPMS pressure (Bar/25)
+0x685 4 46 0F 49 49 ? TPMS battery
+0x201 3 01 31 00 100 Radio button press (hold counter every 100ms)
+0x201 3 00 31 00 100 Radio button release
+0x201 3 08 6A 00 100 Radio knob turn (dir in byte3)
+0x206 3 01 91 00 100 Wheel button press (hold counter every 100ms)
+0x206 3 00 91 00 100 Wheel button release
+0x206 3 08 91 00 100 Wheel knob turn (byte3 01 up / FF down)
+0x208 3 01 17 00 100 AC knob press (hold counter every 100ms)
+0x208 3 00 17 00 100 AC knob release
+0x208 3 08 16 01 100 AC knob turn (byte3 01 up / FF down)
+0x6C1 8 10 2E C0 00 2B 03 01 01 event ISO-TP first frame (display)
+0x2C1 8 30 00 00 00 00 00 00 00 event ISO-TP flow control (display)
+0x6C1 8 21 00 20 23 03 00 41 00 event ISO-TP CF (display)
+0x6C1 8 22 75 00 78 10 0A 00 1B event ISO-TP CF (display)
+0x6C1 8 23 00 5B 00 66 00 53 00 event ISO-TP CF (display)
+0x6C1 8 24 5F 00 67 00 6D 00 41 event ISO-TP CF (display)
+0x6C1 8 25 00 75 00 78 11 01 00 event ISO-TP CF (display)
+0x6C1 8 26 20 12 01 00 20 01 00 event ISO-TP CF (display)
+
+# LS-CAN
+0x108 8 23 20 98 00 04 E5 00 00 50 Speed/RPM (speed = (b2b3)/128, rpm = b5b6)
+0x110 5 00 B4 92 B4 14 100 Distance traveled (1.5748 cm/inc)
+0x145 8 20 00 01 28 00 04 00 00 100 Engine data (coolant = b4 - 40)
+0x190 7 00 00 F9 0B 00 01 17 1000 Mileage (km/64)
+0x235 2 00 FF 1000 LED brightness
+0x260 3 25 43 7F event Turn signal (left/right/hazard)
+0x375 2 00 A0 40 Fuel level (94 - value/2)
+0x440 8 80 90 B0 00 00 78 10 13 1000 System time
+0x445 2 00 73 1000 Outdoor temp (value/2-40)
+0x500 2 00 5C 1500 Voltage (V/8)
+0x530 8 11 11 34 34 38 3A 28 29 1000 TPMS (Bar/25)

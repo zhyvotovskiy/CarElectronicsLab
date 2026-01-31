@@ -28,8 +28,10 @@ https://www.drive2.ru/b/586035300631850029/
 
 ### Какой разъем используется
 TIS (ISP plug in):
-- Opel Astra H — ZF 42-8 [./opel_astra_h_ipc_plug_in.png]
-- Opel Vectra C — ZF 12-14 [./opel_vectra_c_ipc_plug_in.png]
+- Opel Astra H — ZF 42-8  
+  ![opel_astra_h_ipc_plug_in](./opel_astra_h_ipc_plug_in.png) [./opel_astra_h_ipc_plug_in.png]
+- Opel Vectra C — ZF 12-14  
+  ![opel_vectra_c_ipc_plug_in](./opel_vectra_c_ipc_plug_in.png) [./opel_vectra_c_ipc_plug_in.png]
 
 ### Как подключить на столе
 Подключаем питание согласно схеме/распиновке. После подачи питания панель остаётся в неактивном состоянии.
@@ -38,7 +40,7 @@ TIS (ISP plug in):
 - Opel Astra H: +12 V — пины 16 и 27, масса — пины 20 и 21.
 - Opel Vectra C: +12 V — пины 4 и 11, масса — пин 1.
 Кратко по ориентирам: на схеме отмечены линии +12 (красный) и масса (коричневый), пины подписаны возле колодки.
-[./opel_astra_h_ipc_power_schema.png]
+![opel_astra_h_ipc_power_schema](./opel_astra_h_ipc_power_schema.png) [./opel_astra_h_ipc_power_schema.png]
 
 ### Как включить (активация)
 Активация работы приборки наступает при нажатии кнопки сброса суточного пробега.  

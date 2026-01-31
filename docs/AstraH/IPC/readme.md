@@ -9,12 +9,12 @@
 - Трансивер на приборке: TLE6255G (маркировка VC341840K08).
 
 **Фото приборной панели**
-- ![opel_astra_h_ipс_photo_1](./opel_astra_h_ipс_photo_1.jpg) [./opel_astra_h_ipс_photo_1.jpg]
+- ![opel_astra_h_ipc_photo_1](./opel_astra_h_ipc_photo_1.jpg) [./opel_astra_h_ipc_photo_1.jpg]
 - ![opel_astra_h_ipc_photo_2](./opel_astra_h_ipc_photo_2.jpg) [./opel_astra_h_ipc_photo_2.jpg]
 - ![opel_astra_h_ipc_photo_3](./opel_astra_h_ipc_photo_3.jpg) [./opel_astra_h_ipc_photo_3.jpg]
 - ![opel_astra_h_ipc_photo_4](./opel_astra_h_ipc_photo_4.jpg) [./opel_astra_h_ipc_photo_4.jpg]
 - ![opel_astra_h_ipc_photo_5](./opel_astra_h_ipc_photo_5.jpg) [./opel_astra_h_ipc_photo_5.jpg]
-- ![opel_astra_h_ipс_photo_6_demo_1](./opel_astra_h_ipс_photo_6_demo_1.jpg) [./opel_astra_h_ipс_photo_6_demo_1.jpg]
+- ![opel_astra_h_ipc_photo_6_demo_1](./opel_astra_h_ipc_photo_6_demo_1.jpg) [./opel_astra_h_ipc_photo_6_demo_1.jpg]
 
 ### Пробег (EEPROM)
 - EEPROM приборки: ST35080.
@@ -51,7 +51,7 @@ TIS (ISP plug in):
 
 **Как пробудить:** в Transmit задают пакет `170 3 55 55 55` и передают с периодом 500 мс.  
 Подают питание на панель — она «просыпается» и загорается. Без этого пакета панель не пробуждается.  
-(Пример: Opel Zafira.)
+(Пример: Opel Astra H/Zafira B)
 
 **Ссылки:**
 https://www.drive2.ru/b/586266747829499725/  

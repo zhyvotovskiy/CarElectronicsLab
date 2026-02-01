@@ -26,12 +26,12 @@
 - В этом чипе пробег «вперёд» корректируется без проблем; «назад» — через замену/перепайку EEPROM.
 - Дамп читали «обычным прогером 2010», калькулятор пробега — ETSmart (также упоминается iProg+).
 
-### Разъемы TIS (ISP plug-in)
+### Разъемы TIS (IPC plug-in)
 - Opel Astra H — ZF 42-8
 - Opel Vectra C — ZF 12-14
 
-![Opel Astra H IPC — TIS (ISP plug-in)](./opel_astra_h_ipc_plug_in.png)
-![Opel Vectra C IPC — TIS (ISP plug-in)](./opel_vectra_c_ipc_plug_in.png)
+![Opel Astra H IPC — TIS (IPC plug-in)](./opel_astra_h_ipc_plug_in.png)
+![Opel Vectra C IPC — TIS (IPC plug-in)](./opel_vectra_c_ipc_plug_in.png)
 
 ### Как подключить на столе
 Подключаем питание согласно схеме/распиновке. После подачи питания панель остаётся в неактивном состоянии.

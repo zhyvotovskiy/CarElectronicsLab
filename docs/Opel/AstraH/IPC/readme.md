@@ -26,6 +26,9 @@
 - В этом чипе пробег «вперёд» корректируется без проблем; «назад» — через замену/перепайку EEPROM.
 - Дамп читали «обычным прогером 2010», калькулятор пробега — ETSmart (также упоминается iProg+).
 
+**Видео по извлечению Carpass из EEPROM:**  
+https://www.youtube.com/watch?v=ulA75HNp4PE&list=PLLUTlEXxNhgbbZScJmQedW8Meowykf3Z8&index=2
+
 ### Разъемы TIS (IPC plug-in)
 - Opel Astra H — ZF 42-8
 - Opel Vectra C — ZF 12-14

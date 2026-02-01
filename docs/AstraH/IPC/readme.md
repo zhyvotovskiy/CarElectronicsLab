@@ -1,20 +1,23 @@
 ## Приборная панель (Opel Astra H / Opel Vectra C)
 
+Краткая справка по приборной панели, разъемам и подключению на столе.  
+Все изображения находятся в этой же папке.
+
 ### Описание приборки (Astra H)
 - 13186321HC | SW 03.314 | REV 03 | 2004
 - Бензиновая версия, МКПП.
-- Коплектация одна из первых, много не распаенных светодиодов (нет круиза, давление в шинах и тд)
+- Комплектация одна из первых, много нераспаянных светодиодов (нет круиза, давление в шинах и т. д.).
 - На приборке есть GMLAN (SW-CAN) со скоростью 33.3 kbit/s.
 - Используется именно однопроводный SW-CAN.
 - Трансивер на приборке: TLE6255G (маркировка VC341840K08).
 
-**Фото приборной панели**
-- ![opel_astra_h_ipc_photo_1](./opel_astra_h_ipc_photo_1.jpg) [./opel_astra_h_ipc_photo_1.jpg]
-- ![opel_astra_h_ipc_photo_2](./opel_astra_h_ipc_photo_2.jpg) [./opel_astra_h_ipc_photo_2.jpg]
-- ![opel_astra_h_ipc_photo_3](./opel_astra_h_ipc_photo_3.jpg) [./opel_astra_h_ipc_photo_3.jpg]
-- ![opel_astra_h_ipc_photo_4](./opel_astra_h_ipc_photo_4.jpg) [./opel_astra_h_ipc_photo_4.jpg]
-- ![opel_astra_h_ipc_photo_5](./opel_astra_h_ipc_photo_5.jpg) [./opel_astra_h_ipc_photo_5.jpg]
-- ![opel_astra_h_ipc_photo_6_demo_1](./opel_astra_h_ipc_photo_6_demo_1.jpg) [./opel_astra_h_ipc_photo_6_demo_1.jpg]
+### Фото приборной панели
+![Opel Astra H IPC, фото 1](./opel_astra_h_ipc_photo_1.jpg)
+![Opel Astra H IPC, фото 2](./opel_astra_h_ipc_photo_2.jpg)
+![Opel Astra H IPC, фото 3](./opel_astra_h_ipc_photo_3.jpg)
+![Opel Astra H IPC, фото 4](./opel_astra_h_ipc_photo_4.jpg)
+![Opel Astra H IPC, фото 5](./opel_astra_h_ipc_photo_5.jpg)
+![Opel Astra H IPC, фото 6 (демо)](./opel_astra_h_ipc_photo_6_demo_1.jpg)
 
 ### Пробег (EEPROM)
 - EEPROM приборки: ST35080.
@@ -23,12 +26,12 @@
 - В этом чипе пробег «вперёд» корректируется без проблем; «назад» — через замену/перепайку EEPROM.
 - Дамп читали «обычным прогером 2010», калькулятор пробега — ETSmart (также упоминается iProg+).
 
-### Какой разъем используется
-TIS (ISP plug in):
-- Opel Astra H — ZF 42-8  
-  ![opel_astra_h_ipc_plug_in](./opel_astra_h_ipc_plug_in.png) [./opel_astra_h_ipc_plug_in.png]
-- Opel Vectra C — ZF 12-14  
-  ![opel_vectra_c_ipc_plug_in](./opel_vectra_c_ipc_plug_in.png) [./opel_vectra_c_ipc_plug_in.png]
+### Разъемы TIS (ISP plug-in)
+- Opel Astra H — ZF 42-8
+- Opel Vectra C — ZF 12-14
+
+![Opel Astra H IPC — TIS (ISP plug-in)](./opel_astra_h_ipc_plug_in.png)
+![Opel Vectra C IPC — TIS (ISP plug-in)](./opel_vectra_c_ipc_plug_in.png)
 
 ### Как подключить на столе
 Подключаем питание согласно схеме/распиновке. После подачи питания панель остаётся в неактивном состоянии.
@@ -37,11 +40,12 @@ TIS (ISP plug in):
 - Opel Astra H: +12 V — пины 16 и 27, масса — пины 20 и 21.
 - Opel Vectra C: +12 V — пины 4 и 11, масса — пин 1.
 Кратко по ориентирам: на схеме отмечены линии +12 (красный) и масса (коричневый), пины подписаны возле колодки.
-![opel_astra_h_ipc_power_schema](./opel_astra_h_ipc_power_schema.png) [./opel_astra_h_ipc_power_schema.png]
+
+![Opel Astra H IPC — схема питания](./opel_astra_h_ipc_power_schema.png)
 
 ### Как включить (нижний экран)
 Активация нижнего экрана происходит при нажатии кнопки сброса суточного пробега.  
-После подачи питания нажимаем кнопку суточного пробега — примерно через 10 секунд пробег отображается, затем экран отлючается.
+После подачи питания нажимаем кнопку суточного пробега — примерно через 10 секунд пробег отображается, затем экран отключается.
 
 ### Как пробудить всю приборку по CAN (GMLAN)
 Для пробуждения всей приборки используется CAN (GMLAN).

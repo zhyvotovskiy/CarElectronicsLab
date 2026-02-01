@@ -19,7 +19,8 @@ ID DLC data Period Comment
 
 # ===== LS CAN (33 kbps) =====
 0x100 0 - event Wake up bus
-0x170 3 55 55 55 500 Wake up ISP
+0x170 3 55 55 55 500 Wake up ISP (obsolete format!)
+0x170 3 74 55 55 500 Ignition ON (correct format: Data[0]=state, Data[1-2]=0x55)
 0x280 5 70 05 <wait> <count> <length> event Beep (wait/count/length in 10ms units)
 0x5E8 8 81 <d0> <d1> <d2> 00 00 00 00 event ECN digits
 0x5E8 8 81 <clim_dir> <clim_temp> <clim_fan> 00 00 00 00 event ECN climate payload

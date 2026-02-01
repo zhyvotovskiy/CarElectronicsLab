@@ -142,9 +142,11 @@ ObdCanAdapter/
 
 ## Источники
 
-- [Opel Astra H CAN Database](../../docs/Opel/AstraH/can_examples/Car-CAN-Message-DB/)
-- [Megadrifter LS-module](../../docs/Opel/AstraH/can_examples/megadrifter/LS-module/)
-- [IPC Documentation](../../docs/Opel/AstraH/IPC/readme.md)
+- [Opel Astra H CAN Database](../../../docs/Opel/AstraH/can_examples/Car-CAN-Message-DB/)
+- [Megadrifter LS-module](../../../docs/Opel/AstraH/can_examples/megadrifter/LS-module/)
+- [IPC Documentation](../../../docs/Opel/AstraH/IPC/readme.md)
+- [CAN Power Management](../../../docs/Opel/AstraH/can_examples/can_power_management.md)
+- [CAN Test Packets](../../../docs/Opel/AstraH/can_examples/can_test_packets.md)
 
 ## Лицензия
 

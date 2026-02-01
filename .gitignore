@@ -1,0 +1,15 @@
+# macOS
+.DS_Store
+
+# AI Agents & IDEs
+.cursor/
+.vscode/
+.idea/
+.aider*
+.continue/
+.copilot/
+.codeium/
+.windsurf/
+.codex/
+.github-copilot/
+.kiro/

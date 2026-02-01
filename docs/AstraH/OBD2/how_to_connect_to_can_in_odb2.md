@@ -25,3 +25,7 @@ https://www.drive2.ru/l/10423531/
 
 Использование стандарта CAN в ESP32 – полное руководство
 https://microkontroller.ru/esp32-projects/ispolzovanie-standarta-can-v-esp32/
+
+
+![OBD2 pins](obd2_pins.png)
+![Схема can OBD2](opel_astra_can_device.png)
